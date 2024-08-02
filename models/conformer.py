@@ -68,11 +68,17 @@ class ConformerBlock(nn.Module):
         self.post_norm = nn.LayerNorm(dim)
 
     def forward(self, x):
+        print("Input:", x.shape)
         x = x + 0.5 * self.ffm1(x)
+        print("After FFM1:", x.shape)
         x = x + self.attn(x)
+        print("After Attention:", x.shape)
         x = x + self.ccm(x)
+        print("After CCM:", x.shape)
         x = x + 0.5 * self.ffm2(x)
+        print("After FFM2:", x.shape)
         x = self.post_norm(x)
+        print("After LayerNorm:", x.shape)
         return x
 
 
